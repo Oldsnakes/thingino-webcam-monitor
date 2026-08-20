@@ -11,19 +11,6 @@
 <script src="./monitor_set.js"></script>  <!-- // preset values -->
 </head>
 
-<!-- _preview.cgi -->
-<div class="modal fade" id="mdPreview" tabindex="-1" aria-labelledby="mdlPreview" aria-hidden="true">
-<div class="modal-dialog modal-fullscreen"><div class="modal-content"><div class="modal-header">
-<h1 class="modal-title fs-4" id="mdlPreview">Full screen preview</h1>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body text-center">
-<img id="preview_fullsize" src="/a/nostream.webp" alt="Image: Stream Preview" class="img-fluid">
-</div>
-</div>
-</div>
-</div>
-
 <body id="top">
 <div class="container">
 <nav class="navbar navbar-expand-lg">
@@ -39,6 +26,19 @@
 
 <main>
 <div class="container" id="video_view">
+<!-- _preview.cgi -->
+<div class="modal fade" id="mdPreview" tabindex="-1" aria-labelledby="mdlPreview" aria-hidden="true">
+<div class="modal-dialog modal-fullscreen"><div class="modal-content"><div class="modal-header">
+<h1 class="modal-title fs-4" id="mdlPreview">Full screen preview</h1>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body text-center">
+<img id="preview_fullsize" src="/a/nostream.webp" alt="Image: Stream Preview" class="img-fluid">
+</div>
+</div>
+</div>
+</div>
+
 <div class="btn-toolbar" role="toolbar" style="display: flex; gap: 10px;">
 <button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full-screen" style="width: 45px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><img src="/a/zoom.svg" alt="Zoom" width="40" height="40" class="img-fluid icon-sm"></button>
 <button id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 45px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><img src="/a/cam_select.svg" alt="Site" width="40" height="40" class="img-fluid icon-lg"></button>
