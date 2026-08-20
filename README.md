@@ -13,8 +13,28 @@ Features:
 -  motor control for the PTZ camera  
 -  camera select and MJPEG URL input
 -  save the camera URLs to the browser local storage
--  keyboard shortcut while in the full preview
+-  keyboard shortcut, useful in the full preview
 -  can be ran from either a thingino camera or a independent web server
 <img width="666" height="514" alt="monitor-2" src="https://github.com/user-attachments/assets/926b2fce-6aea-48ad-b318-91e957172e13" />
 
 (shown two units with two sensors each)
+
+  Keyboard shortcuts:
+
+    **[up]**      motor up
+  
+    **[down]**    motor down 
+  
+    **[left]**    motor left
+  
+    **[right]**   motor right
+  
+    **H(h)**      motor home
+  
+    **1-9**       camera 1-9
+  
+    **A-G(a-g)**  camera 10-16
+  
+    **D(d)**      download snapshot
+  
+    **S(s)**      camera site
