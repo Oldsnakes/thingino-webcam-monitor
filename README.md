@@ -17,4 +17,5 @@ Features:
 -  keyboard shortcut while in the full preview
 -  can be ran from either a thingino camera or a independent web server
 <img width="666" height="514" alt="monitor-2" src="https://github.com/user-attachments/assets/926b2fce-6aea-48ad-b318-91e957172e13" />
+
 (shown two units with two sensors each)
