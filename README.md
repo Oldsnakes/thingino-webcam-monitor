@@ -19,6 +19,26 @@ Features:
 
 (shown two units with two sensors each)
 
+**Button Functions:**  
+
+<img width="145" height="43" alt="preview number" src="https://github.com/user-attachments/assets/3748f70a-66cd-4869-99c0-4117fdd94b3b" />  Select number of preview pans  
+
+<img width="107" height="47" alt="display coumns" src="https://github.com/user-attachments/assets/62fdae0c-6663-4d6e-8701-851fffc4501c" />  Select number of preview pan in a row   
+
+
+<img width="117" height="45" alt="save config" src="https://github.com/user-attachments/assets/dc996b6b-f8f5-4ee4-b4a1-253fce6d8b7a" />  Save configuration (URls)  
+
+
+<img width="54" height="48" alt="full preview" src="https://github.com/user-attachments/assets/92167bc4-1b65-48c1-81c4-c722559fb8d4" />  Full preview for selected camera 
+
+<img width="55" height="46" alt="camera site" src="https://github.com/user-attachments/assets/d2053e0e-bfd1-43d1-84e1-8b7d2ca16c29" />  To the selected camera web site  
+
+<img width="50" height="45" alt="snapshot download" src="https://github.com/user-attachments/assets/315fab66-e6a6-4039-90d7-9abf157878e1" />  Download snapshot of selected preview  
+
+<img width="296" height="67" alt="cam select" src="https://github.com/user-attachments/assets/f7e7132c-afd7-4014-bdd3-2d1aa4ad6320" />  Camera select (variable)  
+
+<img width="170" height="92" alt="ptz control" src="https://github.com/user-attachments/assets/aac528e5-8ce9-4899-9b87-c59cbfff32b2" />  PTZ dirction control (H for home/calibrate)  
+
   Keyboard shortcuts:  
     - **\[up\]**:      motor up  
     - **\[down\]**:    motor down  
@@ -30,5 +50,5 @@ Features:
     - **S(s)**:      camera site  
 
 Note:  
--  Each of involved camera needs to be authenticated first to allow image to be access and stream.
--  The third party cookies needs to enabled for accessed web server.
+-  The "third party cookies" setting on web browser needs to enabled for the web server.
+-  Each of the camera unit needs to be authenticated first for the image(s) to be access and stream.  If not prompted, access the camera web site first to trigger the authentication first.
