@@ -13,11 +13,11 @@
 <body id="top">
 <div class="container">
 <nav class="navbar navbar-expand-lg">
-<a class="btn btn-dark border ms-2" style="marginRight: 200px;"><img alt="" height="32" src="/a/logo.svg" width="216"></a>
-<button type="button" class="btn btn-secondary" style="width: 120px; height: 40px; border: 1px solid #909020;" onclick="generateElements()">Display Pans</button>
-<input type="number" id="elementCount" value="4" min="1" max="16" style="width: 60px; height: 35px; border: 2px solid #505050;" >
-<button type="button" class="btn btn-secondary" style="width: 85px; height: 35px; border: 1px solid #909020;" onclick="generateElements()">Columns</button>
-<input type="number" id="num_col" value="2" min="1" max="8" style="width: 60px; height: 35px; border: 2px solid #505050;" >
+<a class="btn btn-dark border ms-2" style="width: 300px; height: 50px; font-family: Arial Narrow; fontWeight: 50; color: gray; marginRight: 200px;"><h2><span style="color: gray;"></span>th<span style="color: orange;">ing</span>ino</h2></a>
+<button type="button" class="btn btn-secondary" style="width: 120px; height: 40px; border: 1px solid #909020;" onclick="generateElements()">Preview Pans</button>
+<input type="number" id="elementCount" value="4" min="1" max="16" style="width: 50px; height: 45px; border: 2px solid #505050;" >
+<button type="button" class="btn btn-secondary" style="width: 85px; height: 45px; border: 1px solid #909020;" onclick="generateElements()">Columns</button>
+<input type="number" id="num_col" value="2" min="1" max="8" style="width: 50px; height: 45px; border: 2px solid #505050;" >
 <button type="button" class="btn btn-secondary" id="save-urls-config" style="width: 120px; height: 40px; border: 2px solid orange; background: darkblue;">Save Config</button>
 </nav>
 </div> 
@@ -39,9 +39,9 @@
 </div>
 
 <div class="btn-toolbar" role="toolbar" style="display: flex; gap: 10px;">
-<button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full-screen" style="width: 45px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><img src="/a/zoom.svg" alt="Zoom" width="40" height="40" class="img-fluid icon-sm"></button>
-<button id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 45px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><img src="/a/cam_select.svg" alt="Site" width="40" height="40" class="img-fluid icon-lg"></button>
-<a id="download_image" href="" target="_blank" class="btn btn-dark border mb-2" title="Save image" style="width: 45px; height: 45px; border: 2px solid DimGray; background: darkblue"; border-radius: 5px;><img src="/a/download.svg" alt="Save image" width="40" height="40" class="img-fluid icon-sm"></a>
+<button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full Preview" style="fontSize: 30px; width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px; textAlign: center; paddingLeft: 0px; "><h3>&#9974;</h3></button>
+<button id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><h4>&#127760;</h4></button>
+<a id="download_image" href="" target="_blank" class="btn btn-dark border mb-2" title="Save Image" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue"; border-radius: 5px;><h4>&#128247;</h4></a>
 
 <!-- camera selection, dynamic size -->
 <div class="btn-group mb-3" role="group" id="cam_select">
@@ -54,27 +54,50 @@
 <label type="button" class="btn btn-secondary" style="width: 60px; height: 35px; border: 1px solid #909020;" >PTZ</label>
 
 <div class="col mb-3">
-<div class="ml-0 row-cols-2" id="ptz" style="width: 146px; height: 95px; border: 2px solid #805080;">
+<div class="ml-0 row-cols-2" id="ptz" style="width: 120px; height: 95px; border: 2px solid #805080;">
 <div class="col mb-0"  style="display: flex; gap: 0px;">
-<label class="btn btn-dark border ms-2" style="width: 40px; height: 30px;  color: darkgray; marginLeft: 0px; background: darkgray"; border-radius: 2px;>^</label>
-<a id="motor_up" onclick="openAndClose(event,motor_up_url)" target="_self" class="btn btn-dark border ms-2" title="up" style="width: 40px; height: 30px; MarginLeft: 0; background: darkblue"; border-radius: 2px;>^</a>
-<label class="btn btn-dark border ms-2" style="width: 40px; height: 30px; color: darkgray; marginLeft: 0px; background: darkgray"; border-radius: 2px;>^</label>
+<div class="btn blank_btn">&#8678;</div>
+<a class="btn dir_btn"  id="motor_up" onclick="openAndClose(event,motor_up_url)" target="_self" title="up" style="width: 40px; height: 30px;">&#8679;</a>
+<div class="btn blank_btn">^</div>
 </div>
 <div class="col mb-0"  style="display: flex; gap: 0px;">
-<a id="motor_left" onclick="openAndClose(event,motor_left_url)" target="_self" class="btn btn-dark border ms-2" title="left" style="width: 40px; height: 30px; marginLeft: 0; paddingLeft: 0; background: darkblue"; border-radius: 2px;><</a>
-<a id="motor_home" onclick="openAndClose(event,motor_home_url)" target="_self" class="btn btn-dark border ms-2" title="Home" style="width: 40px; height: 30px; marginLeft: 0; paddingLeft: 0; background: darkblue"; border-radius: 2px;>H</a>
-<a id="motor_right" onclick="openAndClose(event,motor_right_url)" target="_self" class="btn btn-dark border ms-2" title="right" style="width: 40px; height: 30px; marginLeft: 0px; background: darkblue"; border-radius: 2px;>></a>
+<a class="btn dir_btn"  id="motor_left" onclick="openAndClose(event,motor_left_url)" target="_self" title="left" style="width: 40px; height: 30px;">&#8678;</a>
+<a class="btn dir_btn"  id="motor_home" onclick="openAndClose(event,motor_home_url)" target="_self" title="home" style="width: 40px; height: 30px;">H</a>
+<a class="btn dir_btn"  id="motor_right" onclick="openAndClose(event,motor_right_url)" target="_self" title="right" style="width: 40px; height: 30px;">&#8680;</a>
 </div>
 <div class="col mb-0"  style="display: flex; gap: 0px;">
-<label class="btn btn-dark border ms-2" style="width: 40px; height: 30px; color: darkgray; marginLeft: 0px; background: darkgray"; border-radius: 2px;>^</label>
-<a id="motor_down" onclick="openAndClose(event,motor_down_url)" target="_self" class="btn btn-dark border ms-2" title="down" style="width: 40px; height: 30px; marginLeft: 0px; background: darkblue; display: inline-block; transform: scaleY(-1); border-radius: 2px;">^</a>
-<label width=10  height=10 class="btn btn-dark border ms-2" style="width: 40px; height: 30px; color: darkgray; marginLeft: 0px; background: darkgray"; border-radius: 2px;>^</label>
+<div class="btn blank_btn">&#8678;</div>
+<a class="btn dir_btn"  id="motor_down" onclick="openAndClose(event,motor_down_url)" target="_self" title="down" style="width: 40px; height: 30px;">&#8681;</a>
+<div class="btn blank_btn"></div>
 </div>
 
 </div>
 </div>
 
 <style>
+.dir_btn:hover {
+	background-color: gray; 
+}
+
+.dir_btn {
+	width: 40px; 
+	height: 40px;
+	margin-left: 0px; 
+	color: white;
+	background-color: darkblue; 
+	border-color: gray;
+	border-radius: 2px;
+}
+
+.blank_btn {
+	width: 40px; 
+	height: 30px;
+	margin-left: 0px; 
+	color: black;
+	background-color: smoke; 
+	border-radius: 5px;
+}
+
 .no-gutters {
   margin-right: 0px;
   margin-left: 0px;
