@@ -28,3 +28,7 @@ Features:
     - **A-G(a-g)**:  camera 10-16  
     - **D(d)**:      download snapshot  
     - **S(s)**:      camera site  
+
+Note:  
+-  Each of involved camera needs to be authenticated first to allow image to be access and stream.
+-  The third party cookies needs to enabled for accessed web server.
