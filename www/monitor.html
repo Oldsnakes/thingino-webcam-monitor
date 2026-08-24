@@ -38,17 +38,50 @@
 </div>
 </div>
 
-<div class="btn-toolbar" role="toolbar" style="display: flex; gap: 10px;">
+<div class="btn_toolbar" role="toolbar" style="display: flex; gap: 10px;">
 <button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full Preview" style="fontSize: 30px; width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px; textAlign: center; paddingLeft: 0px; "><h3>&#9974;</h3></button>
 <button id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><h4>&#127760;</h4></button>
 <a id="download_image" href="" target="_blank" class="btn btn-dark border mb-2" title="Save Image" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue"; border-radius: 5px;><h4>&#128247;</h4></a>
 
+<div class="container" id="command_box">
+<div classe="row">
+	<label for="site_url_in">Target URL</label>
+	<input type="text" id="site_url_in" name="site_url_in" value='192.168.1.162'>
+</div>
+<div classe="row">
+	<label for="cmd">JSON Command</label>
+	<input type="text" id="cmd" name="cmd" style="width: 500px;" value='{"sensor":{"select":2}}'>
+</div>
+<div classe="row mb-3" style="visibility: visible;">
+	<label for="responseMsg">Response: </label>
+	<input type="text" id="responseMsg" style="width: 500px;" name="responseMsg" value="">
+</div>
+</div>
 <!-- camera selection, dynamic size -->
-<div class="btn-group mb-3" role="group" id="cam_select">
+<div classe="row">
+<div class="btn-group" role="group" id="cam_select">
 <div id="cam_select_btn">
 </div>
 </div>
+</div>
 
+<div class="box" id="cam_cmd">
+<div class="row" style="margin: 0px;">
+<button id="white_on" data-mode=1 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light ON" style="background: darkblue;">&#128161;</button>
+<button id="ir850_on" data-mode=1 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light ON" style="background: darkblue;">&#128680;</button>
+<button id="ircut_on" data-mode=1 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut ON" style="background: darkblue;">&#9618;</button>
+<button id="bw_mode_on" data-mode=1 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Black and White" style="background: darkblue;">&#9788;</button>
+<button id="motion_on" data-mode=true data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion ON" style="background: darkblue;"><h4>&#128694;</h4></button>
+</div>
+
+<div class="row" style="margin-left: 0px; margin-top: 0px;">
+<button id="white_off" data-mode=0 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light off" style="background: black; opacity: 0.4;">&#128161;</button>
+<button id="ir850_off" data-mode=0 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light off" style="background: black; opacity: 0.4;">&#128680;</button>
+<button id="ircut_off" data-mode=0 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut off" style="color: red; background: black;">&#9618;</button>
+<button id="bw_mode_off" data-mode=0 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Color Mode" style="background: black;">&#9978;</button>
+<button id="motion_off" data-mode=false data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion off" style="background: black;"><h4>&#129485;</h4></button>
+</div>
+</div>
 
 <div class="row row-col-2 no-gutters" style="marginLeft: 20px; marginRight:0; marginBottom: 0" >
 <label type="button" class="btn btn-secondary" style="width: 60px; height: 35px; border: 1px solid #909020;" >PTZ</label>
@@ -70,8 +103,19 @@
 <a class="btn dir_btn"  id="motor_down" onclick="openAndClose(event,motor_down_url)" target="_self" title="down" style="width: 40px; height: 30px;">&#8681;</a>
 <div class="btn blank_btn"></div>
 </div>
+</div>
 
 </div>
+</div>
+</div>
+
+
+<!-- camera viewing pans, dynamic size -->
+<p class="small"></p>
+<div class="row row-cols-2 row-cols-lg-2" id="view_area">
+
+</div>
+
 </div>
 
 <style>
@@ -79,6 +123,13 @@
 	background-color: gray; 
 }
 
+.cmd_btn {
+	width: 55px; 
+	height: 40px; 
+	border: 2px solid DimGray; 
+	background: black; 
+	border-radius: 5px;
+}
 .dir_btn {
 	width: 40px; 
 	height: 40px;
@@ -124,12 +175,19 @@ input {
 
 </div>
 </div>
+    <style>
+        .box {
+            width: 290px;
+            height: 90px;
+            background-color: #303030; 
+            border: 2px solid #505050;
+            padding: 5px;
+            margin: 0px;
+        }
 
-<!-- camera viewing pans, dynamic size -->
-<p class="small"></p>
-<div class="row row-cols-2 row-cols-lg-2" id="view_area">
+    </style>
 
-</div>
+<div class="container" id="setting_area">
 
 </div>
 </div>
@@ -147,26 +205,33 @@ var urls=[
 ];
 
 var site_url;
+var ch = 0;	// video channel
+var s_ch = 0;  // sensor channel
 var active = 1;
 var motor_up_url;
 var motor_down_url;
 var motor_left_url;
 var motor_right_url;
 var motor_home_url;
+var command_mode = false;
+
+const cmd_params = ['ir850_on', 'white_on', 'ircut_on', 'bw_mode_on', 'motion_on', 'ir850_off', 'white_off', 'ircut_off', 'bw_mode_off', 'motion_off'];
+
+var clickTimer;
 
 const controller = new AbortController();
 
 function generateElements() {
-  const container = document.getElementById("view_area");
-  const select = document.getElementById("cam_select_btn");
-  const count = document.getElementById(`elementCount`).value;
+   const container = document.getElementById("view_area");
+   const select = document.getElementById("cam_select_btn");
+   const count = document.getElementById(`elementCount`).value;
   
-  // Clear any existing elements first
-  container.innerHTML = ''; 
-  select.innerHTML = ''; 
+   // Clear any existing elements first
+   container.innerHTML = ''; 
+   select.innerHTML = ''; 
 
-  // Generate the new variable number of elements
-  for (let i = 1; i <= count; i++) {
+   // Generate the new variable number of elements
+   for (let i = 1; i <= count; i++) {
 	// *** camera select 
 	//<input type="radio" class="btn-check" name="preview_source" id="preview_source_1" value="1" checked>
 	//<label class="btn btn-outline-primary" for="preview_source_1">Camera 1</label>
@@ -207,19 +272,36 @@ function generateElements() {
     	const newPreview = document.createElement('img');
 	newPreview.className = 'img-fluid';
 	newPreview.id = "preview"+i;
-	newPreview.src= http+newInput.value;
+	newPreview.src= check_url(newInput.value);
     	newDiv.appendChild(newPreview);
-  }
+   }
+}
+
+function view_init()
+{
   controller.abort();
   set_visibility();  // preview pans
   set_cam_select();
   preview_source_1.click();
 }
 
+function mouse_init()
+{
+	const image = document.querySelectorAll('img');
+	image.forEach(x => {
+    		x.addEventListener('dblclick', handleMouseDoubleClick);
+	});
+	image.forEach(x => {
+    		x.addEventListener('click', handleMouseClick);
+	});
+}
+
 
 $('#elementCount').addEventListener('change', () => 
 {
 	generateElements();
+	view_init();
+	mouse_init();
 });
 
 $('#num_col').addEventListener('change', () => 
@@ -237,11 +319,53 @@ $('#save-urls-config').addEventListener('click', () =>
 	saveURLs();
 });
 
-// preview pans
+$('#cmd').addEventListener('change', () => 
+{
+	excute_cmd();
+});
+
+let s_sel = '"sensor":{"select":';
+
+
+cmd_params.forEach((x) => {
+	const el = $(`#${x}`);
+	if (!el) {
+		console.debug(`element ${x} not found`);
+		return;
+	}
+
+	el.addEventListener('click', () => 
+	{
+		let cmd = el.dataset.cmd;
+		let mode = el.dataset.mode;
+		sendJson('{' +cmd+mode+ '},' +s_sel+s_ch+ '}}');
+	});
+});
+
+function sendJson(payload)
+{
+	let json_url = check_url(site_url+'/x/json-prudynt-1.cgi')
+	let out_string = json_url+'?'+payload;
+	console.log(out_string);
+	openAndCloseJson(out_string);
+}
+
+function excute_cmd()
+{
+	$(`#responseMsg`).value = "..."; 
+
+	let json_url = check_url(site_url_in.value+'/x/json-prudynt-1.cgi')
+	let out_string = json_url+'?'+(cmd.value);
+	console.log(out_string);
+	openAndCloseJson(out_string);
+	//let msg = sendJsonToSite(site_url_in.value, cmd.value);
+}
+
+// set preview pans
 function set_visibility()
 {
 	for (let i = 1; i <= elementCount.value; i++) {
-   	    $(`#preview${i}`).src = http+($(`#cam_${i}`).value);
+   	    $(`#preview${i}`).src = check_url($(`#cam_${i}`).value);
   	    $('#cam_'+i).addEventListener('change', () => 
     	    { 
 		if ($(`#cam_${i}`).value == "") {
@@ -251,7 +375,7 @@ function set_visibility()
 		else {
 			$(`#preview${i}`).style.visibility = 'visible';
 			$(`#preview${i}`).style.display = 'block';
-			$(`#preview${i}`).src = http+($(`#cam_${i}`).value);
+			$(`#preview${i}`).src = check_url($(`#cam_${i}`).value);
 		}
 		urls[i] = $(`#cam_${i}`).value;
      	    });
@@ -266,16 +390,16 @@ function set_cam_select()
 	    { 
 		$(`#preview${active}`).style="border: 3px solid gray";
 		$(`#preview${i}`).style="border: 3px solid orange";
-	   	$('#preview_fullsize').src=http+($(`#cam_${i}`).value);;
+	   	$('#preview_fullsize').src=check_url($(`#cam_${i}`).value);;
 		$('#mdlPreview').textContent = "Preview of Camera #"+i;
 		//$(`#preview${active}`).checked = false;
 		//$(`#preview${i}`).checked = true;
 		active = i;
-		site_url = http+urls[i].substring(0, urls[i].indexOf("/"));
-		let s, s1;
-		s = urls[i].indexOf("mjpg");
-		s1 = urls[i].substring(s-2,s-1);
-    		document.getElementById("download_image").href = site_url+"/x/image.cgi?channel="+s1;
+		site_url = check_url(urls[i].substring(0, urls[i].indexOf("/")));
+		let s = urls[i].indexOf("mjpg");
+		ch = urls[i].substring(s-2,s-1);
+		s_ch = Number(ch)+1;
+    		document.getElementById("download_image").href = site_url+"/x/image.cgi?channel="+ch;
     		motor_up_url = site_url+"/x/json-motor.cgi?d=g&x=0&y=-100";
     		motor_down_url = site_url+"/x/json-motor.cgi?d=g&x=0&y=100";
     		motor_left_url = site_url+"/x/json-motor.cgi?d=g&x=-100&y=0";
@@ -310,6 +434,32 @@ function getURLs() {
                 alert('No data found in localStorage. Click save first.');
             }
 }
+function check_url(url)
+{
+	if (url.substring(0, url.indexOf(":")) != "http")
+		url = http+url;
+	return url;
+}
+
+async function openAndCloseJson(url) {
+	responseMsg.value = ".....";
+	site_url_in.value = site_url;
+	myWindow = window.open(url, '_blank'); // Open the new link
+	await sleep(200); // target may need time to process the command
+	if (myWindow != null) {
+		let aa = myWindow.document.querySelector("pre");
+		if (aa != null) {
+			let dd = aa.outerText;
+			let bb = dd.indexOf("\n");
+			let cc = dd.substring(bb+1);
+			responseMsg.value = cc;
+		} 
+	}
+	else {
+		responseMsg.value = site_url+" not accessible!";
+	}
+	myWindow.close(); // Try to close the current page
+}
 
 async function openAndClose(event,url) {
 	event.preventDefault(); // Stop default link behavior
@@ -318,123 +468,167 @@ async function openAndClose(event,url) {
 	myWindow.close(); // Try to close the current page
 }
 
-getURLs();
-generateElements();
+// send a JSON string to url cgi program, only work to the web server
+async function sendJsonToSite(url, payload) {
+	let endpoint = check_url(url+'/x/json-motor.cgi');
+	// let endpoint = check_url(url+'/x/json-prudynt-1.cgi');
+	let msg;
+	console.log(ts(), url, '===>', payload);
+	try {
+		const response = await fetch(endpoint, {
+			method: 'POST',
+			headers: { 'Content-Type': 'text/plain' },
+			//headers: { 'Content-Type': 'application/json' },
+			body: payload
+		});
+		if (!response.ok) throw new Error(`HTTP ${response.status}`);
+		const contentType = response.headers.get('content-type');
+		if (contentType?.includes('application/json')) {
+			msg = await response.json();
+			responseMsg.value = JSON.stringify(msg);
+			console.log(ts(), '<===', JSON.stringify(msg));
+		//	handleMessage(msg);
+		}
+	} catch (err) {
+		console.error('Send error', err);
+	}
+	return msg;
+}
 
-set_visibility();
-set_cam_select();
-preview_source_1.click();
+
+function keyboard_init()
+{
+    cmd.addEventListener("keyup", function (e) {
+        if (e.keyCode == 13) {   // [enter]
+		excute_cmd();
+        }
+    });
+    //  keyboard function
+    video_view.addEventListener("keyup", function (e) {
+        // <27>: escape key Code
+        if (e.keyCode == 27) {
+        }
+    if (document.activeElement.className != "input")
+	switch(e.keyCode) {
+		case 37:
+			motor_left.click();
+			break;
+		case 38:
+			motor_up.click();
+			break;
+		case 39:
+			motor_right.click();
+			break;
+		case 40:
+			motor_down.click();
+			break;
+		case 72:
+			motor_home.click();
+			break;
+		case 70:
+			zoom_btn.click();
+			//preview_fullsize.click();
+			break;
+		case 68:
+			download_image.click();
+			break;
+		case 83:
+			site_btn.click();
+			break;
+		case 32:
+			preview_fullsize.click();
+			break;
+	}
+	if ((e.keyCode) >= 49 && (e.keyCode <= 57)) {  // 1-9
+		$(`#preview_source_`+String.fromCharCode(e.keyCode)).click();
+		//zoom_btn.click();
+	} else  // 65=A, 90=Z
+	if ((e.keyCode) >= 65 && (e.keyCode <= 71)) {  // A-G = 10 to 16
+		let i = e.keyCode - 55;
+		$(`#preview_source_`+i).click();
+		//zoom_btn.click();
+	} else  // alt-K(k) key to enable JSON string command box
+	if ((e.altKey == true) && ((e.keyCode) == 75)) {
+		if (command_mode == false) {
+			command_mode = true;
+			command_box.style.visibility = "visible";
+			command_box.style.display= "block";
+		} else {
+			command_mode = false;
+			command_box.style.display= "none";
+		}	
+	}
+    });
+}
+
+function handleMouseDoubleClick(e) {
+    clearTimeout(clickTimer);
+
+    switch(e.currentTarget.id) {
+	case "preview1":
+		$(`#preview_source_1`).click();
+		break;
+	case "preview2":
+		$(`#preview_source_2`).click();
+		break;
+	case "preview3":
+		$(`#preview_source_3`).click();
+		break;
+	case "preview4":
+		$(`#preview_source_4`).click();
+		break;
+    }
+
+    site_url = check_url(urls[active].substring(0, urls[active].indexOf("/")));
+    window.open(site_url, '_blank');
+}
+
+function zoom(id) {
+    switch(id) {
+	case "preview1":
+		$(`#preview_source_1`).click();
+		zoom_btn.click();
+		break;
+	case "preview2":
+		$(`#preview_source_2`).click();
+		zoom_btn.click();
+		break;
+	case "preview3":
+		$(`#preview_source_3`).click();
+		zoom_btn.click();
+		break;
+	case "preview4":
+		$(`#preview_source_4`).click();
+		zoom_btn.click();
+		break;
+    }
+}
+
+function handleMouseClick(e) {
+    	var id = e.currentTarget.id; 
+
+	clearTimeout(clickTimer);
+	clickTimer = setTimeout(zoom, 250, id);
+}
 
 window.onload = 
     function() { 
-  	const viewArea = document.getElementById("view_area");
-	const image = document.querySelectorAll('img');
+	getURLs();
+	generateElements();
+	view_init();
+	mouse_init();
+	keyboard_init();
+	set_visibility();
+	set_cam_select();
+	preview_source_1.click();
+	command_mode = false;
+	command_box.style.display= "none";
+    };
 
-	let clickTimer;
-
-	image.forEach(x => {
-    		x.addEventListener('dblclick', handleMouseDoubleClick);
-	});
-
-	function handleMouseDoubleClick(e) {
-		clearTimeout(clickTimer);
-
-	    switch(e.currentTarget.id) {
-		case "preview1":
-			$(`#preview_source_1`).click();
-			break;
-		case "preview2":
-			$(`#preview_source_2`).click();
-			break;
-		case "preview3":
-			$(`#preview_source_3`).click();
-			break;
-		case "preview4":
-			$(`#preview_source_4`).click();
-			break;
-		}
-
-	site_url = http+urls[active].substring(0, urls[active].indexOf("/"));
-	window.open(site_url, '_blank');
-        }
-
-	image.forEach(x => {
-    		x.addEventListener('click', handleMouseClick);
-	});
-
-	function zoom(id) {
-	    switch(id) {
-		case "preview1":
-			$(`#preview_source_1`).click();
-			zoom_btn.click();
-			break;
-		case "preview2":
-			$(`#preview_source_2`).click();
-			zoom_btn.click();
-			break;
-		case "preview3":
-			$(`#preview_source_3`).click();
-			zoom_btn.click();
-			break;
-		case "preview4":
-			$(`#preview_source_4`).click();
-			zoom_btn.click();
-			break;
-		}
-	}
-	function handleMouseClick(e) {
-	    	var id = e.currentTarget.id; 
-
-		clearTimeout(clickTimer);
-		clickTimer = setTimeout(zoom, 250, id);
-        }
-	//  keyboard function
-        video_view.addEventListener("keyup", function (e) {
-                 // <27>: escape key Code
-                 if (e.keyCode == 27) {
-                 }
-		switch(e.keyCode) {
-			case 37:
-				motor_left.click();
-				break;
-			case 38:
-				motor_up.click();
-				break;
-			case 39:
-				motor_right.click();
-				break;
-			case 40:
-				motor_down.click();
-				break;
-			case 72:
-				motor_home.click();
-				break;
-			case 70:
-				//preview_fullsize.click();
-				break;
-			case 68:
-				download_image.click();
-				break;
-			case 83:
-				site_btn.click();
-				break;
-			case 32:
-				site_btn.click();
-				break;
-		}
-		if ((e.keyCode) >= 49 && (e.keyCode <= 57)) {  // 1-9
-			$(`#preview_source_`+String.fromCharCode(e.keyCode)).click();
-			//zoom_btn.click();
-		} else  // 65=A, 90=Z
-		if ((e.keyCode) >= 65 && (e.keyCode <= 71)) {  // A-G = 10 to 16
-			let i = e.keyCode - 55;
-			$(`#preview_source_`+i).click();
-			//zoom_btn.click();
-		}
-        });
-}
 </script>
 
 </main>
 
 </html>
+
+
