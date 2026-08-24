@@ -45,11 +45,11 @@ This is a quick project that targets to bring all the camera that uses thingino 
 
 ### Camera Function Control (need prudynt-t update and add www/x/json-prudynt-1.cgi)
 
-<img width="50" height="76" alt="white-on-off" src="https://github.com/user-attachments/assets/0c8f7878-6a30-4670-ba0a-6aa264883b82" />  White Light on/ovv
+<img width="50" height="76" alt="white-on-off" src="https://github.com/user-attachments/assets/0c8f7878-6a30-4670-ba0a-6aa264883b82" />  White Light on/off (direct JSON GPIO control in prudynt-t required)
 
-<img width="48" height="79" alt="ir-on-off" src="https://github.com/user-attachments/assets/730f87c0-847e-423f-ae62-732bb344887a" />  IR Light on/off
+<img width="48" height="79" alt="ir-on-off" src="https://github.com/user-attachments/assets/730f87c0-847e-423f-ae62-732bb344887a" />  IR Light on/off (direct JSON GPIO control in prudynt-t required)
 
-<img width="48" height="80" alt="ir cut on-off" src="https://github.com/user-attachments/assets/89de6d8f-1e89-4e35-955c-9f60de232c0a" />  IR Cut on/off
+<img width="48" height="80" alt="ir cut on-off" src="https://github.com/user-attachments/assets/89de6d8f-1e89-4e35-955c-9f60de232c0a" />  IR Cut on/off (direct JSON GPIO control in prudynt-t required)
 
 <img width="51" height="76" alt="bw color" src="https://github.com/user-attachments/assets/ea57c430-f2d6-40a2-a045-c1ca0a60873c" />  Black and White / Color
 
