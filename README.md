@@ -1,4 +1,6 @@
-# thingino-webcam-monitor            updated: 8/23/2026
+# thingino-webcam-monitor            
+updated: 8/23/2026
+
 Web browser webcam preview monitor.  For use with Thingino firmware potocol. 
 This is a quick project that targets to bring all the camera that uses thingino firmware preview at one web page.  It will allow monitoring (and control) the cameras all at one place.  The quick camera site access also allow to fine tune the camera via web UI. 
 
