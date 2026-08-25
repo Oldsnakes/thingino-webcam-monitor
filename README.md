@@ -1,5 +1,5 @@
-# thingino-webcam-monitor            
-updated: 8/23/2026
+# thingino webcam monitor            
+updated: 8/24/2026
 
 Web browser webcam preview monitor.  For use with Thingino firmware potocol. 
 This is a quick project that targets to bring all the camera that uses thingino firmware preview at one web page.  It will allow monitoring (and control) the cameras all at one place.  The quick camera site access also allow to fine tune the camera via web UI. 
@@ -13,12 +13,14 @@ This is a quick project that targets to bring all the camera that uses thingino 
 -  full preview with a single click on a preview pan
 -  access the camera site with a double click on a preview pan
 -  download the snapshot of preview
--  motor control for the PTZ camera  
 -  camera select and MJPEG URL input
+-  motor control for the PTZ camera
+-  camera function/setting control
+-  camera setting status (for camera on the same web domain)
 -  save the camera URLs to the browser local storage
 -  keyboard shortcut, useful in the full preview
 -  can be ran from either a thingino camera or a independent web server
-<img width="661" height="519" alt="monitor-4" src="https://github.com/user-attachments/assets/7a26580d-eda6-4a2f-9986-2952d7039095" />
+<img width="666" height="517" alt="monitor-5" src="https://github.com/user-attachments/assets/853e41c6-df25-42cc-a26d-e3db7dca3b56" />
 
 (shown two units with two sensors each)
 
@@ -56,17 +58,18 @@ This is a quick project that targets to bring all the camera that uses thingino 
 <img width="52" height="81" alt="motio on-off" src="https://github.com/user-attachments/assets/b7d83161-a4ab-4105-99f1-a97c45f771f6" />  Motion Detection on/off
 
 ## Keyboard shortcuts:
-- **\[up\]**:      motor up  
-- **\[down\]**:    motor down  
-- **\[left\]**:    motor left  
-- **\[right\]**:   motor right  
-- **1-9**:       camera select 1-9  
-- **A-G(a-g)**:  camera select 10-16  
-- **D(d)**:      download snapshot  
-- **S(s)**:      camera site  
+- **\[up\]:**      motor up  
+- **\[down\]:**    motor down  
+- **\[left\]:**    motor left  
+- **\[right\]:**   motor right  
+- **1-9:**         camera select 1-9  
+- **A-G(a-g):**    camera select 10-16  
+- **D(d):**        download snapshot  
+- **S(s):**        camera site  
 
 ## Note:  
 -  The "third party cookies" setting on web browser needs to enabled for the web server.
 -  Each of the camera unit needs to be authenticated first for the image(s) to be access and stream.  If not prompted, access the camera web site first to trigger the authentication first.
--  The Camera Function Control is done by sending a JSON string through a new tab to the thingino web server (www/x/json-prudynt-1.cgi & prudyntctl).  This require enabling "allow pop up" in the web client settings at the camera sites.  It also require an escape character conversion (%22 to " ) be added in the thingino prudyntctl program on the camera firmware.  Otherwise, it won't process correctly.  
+-  The Camera Function Control is done by sending a JSON string through a new tab to the thingino web server (www/x/json-prudynt-1.cgi & prudyntctl).  This require enabling "allow pop up" in the web client settings at the camera sites.  It also require an escape character conversion (%22 to " ) be added in the thingino prudyntctl program on the camera firmware.  Otherwise, it won't process correctly.
+-  The camera setting status will only shown if it is on the same web domain.
 
