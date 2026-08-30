@@ -12,13 +12,15 @@
 
 <body id="top">
 <div class="container">
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg" style="display: flex; gap 15px; margin: 10px;">
 <a class="btn btn-dark border ms-2" style="width: 300px; height: 50px; font-family: Arial Narrow; fontWeight: 50; color: gray; marginRight: 200px;"><h2><span style="color: gray;"></span>th<span style="color: orange;">ing</span>ino</h2></a>
 <button type="button" class="btn btn-secondary" style="width: 120px; height: 40px; border: 1px solid #909020;" onclick="generateElements()">Preview Pans</button>
 <input type="number" id="elementCount" value="4" min="1" max="16" style="width: 50px; height: 45px; border: 2px solid #505050;" >
 <button type="button" class="btn btn-secondary" style="width: 85px; height: 45px; border: 1px solid #909020;" onclick="generateElements()">Columns</button>
 <input type="number" id="num_col" value="2" min="1" max="8" style="width: 50px; height: 45px; border: 2px solid #505050;" >
 <button type="button" class="btn btn-secondary" id="save-urls-config" style="width: 120px; height: 40px; border: 2px solid orange; background: darkblue;">Save Config</button>
+<label for="cmd_status" style="display: flex; gap: 20px;" >Status: </abel>
+<input type="text" id="md_status" name="md_status" value='status' style="field-sizing: content; min-width: 5ch;">
 </nav>
 </div> 
 </body>
@@ -109,10 +111,21 @@
 </div>
 </div>
 
-
 <!-- camera viewing pans, dynamic size -->
 <p class="small"></p>
 <div class="row row-cols-2 row-cols-lg-2" id="view_area">
+<style>
+<!-- variable input field -->
+.input {
+  field-sizing: content;
+  min-width: 40px; 
+  max-width: 600px; 
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+</style>
+
 
 </div>
 
@@ -126,7 +139,7 @@
 .cmd_btn {
 	width: 55px; 
 	height: 40px; 
-	border: 4px solid DimGray; 
+	border: 5px solid DimGray; 
 	background: black; 
 	border-radius: 5px;
 }
@@ -159,16 +172,6 @@
     padding-right: 0px;
     padding-left: 0px;
   }
-}
-
-<!-- variable input field -->
-input {
-  field-sizing: content;
-  min-width: 40px; 
-  max-width: 400px; 
-  height: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 </style>
@@ -268,6 +271,7 @@ function generateElements() {
     	newInput.className = 'input';
     	newInput.id = 'cam_'+i;
     	newInput.value = urls[i];
+	newInput.style.fieldSizing = "content";
     	newDiv.appendChild(newInput);
 	//  *** preview pan
 	// <img id="preview1" src=#cam_1 class="img-fluid" alt="Image 1 Preview">
@@ -432,7 +436,7 @@ function excute_cmd()
 	let json_url = check_url(site_url_in.value+'/x/json-prudynt-1.cgi')
 	let out_string = json_url+'?'+(cmd.value);
 	console.log(out_string);
-	openAndCloseJson(out_string);
+	cmd_status.outerText = openAndCloseJson(out_string);
 	//let msg = sendJsonToSite(site_url_in.value, cmd.value);
 }
 
@@ -463,6 +467,7 @@ function set_cam_select()
 	for (let i = 1; i <= elementCount.value; i++) {
     	    $('#preview_source_'+i).addEventListener('click', () => 
 	    { 
+		$(`#md_status`).value="";
 		$(`#preview${active}`).style="border: 3px solid gray";
 		$(`#preview${i}`).style="border: 3px solid orange";
 	   	$('#preview_fullsize').src=check_url($(`#cam_${i}`).value);;
@@ -535,6 +540,7 @@ function check_url(url)
 async function openAndCloseJson(url) {
 	responseMsg.value = ".....";
 	site_url_in.value = site_url;
+	let res = "status";
 	myWindow = window.open(url, '_blank'); // Open the new link
 	await sleep(400); // target may need time to process the command
 	if (myWindow != null) {
@@ -546,15 +552,21 @@ async function openAndCloseJson(url) {
 			let cc = dd.substring(bb+1);
 			responseMsg.value = cc;
 			handleMessage(JSON.parse(cc));
+			res = "";
+			$(`#md_status`).value = res;
 		} 
 	   } catch(err) {
 		console.error('access error', err);
+	   } finally {
+		myWindow.close(); // Try to close the current page
+		if (res != "")  res = site_url + ' response error!';
+		$(`#md_status`).value = res;
 	   }
+	} else {
+		myWindow.close(); // Try to close the current page
+		res = site_url+" not accessible!";
+		$(`#md_status`).value = res;
 	}
-	else {
-		responseMsg.value = site_url+" not accessible!";
-	}
-	myWindow.close(); // Try to close the current page
 }
 
 async function openAndClose(event,url) {
