@@ -1,27 +1,28 @@
 <!DOCTYPE html>
+<!-- thingino multiple preview cameras/sensors with camera controls -->
 <html lang="en" data-bs-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta content="width=1000,initial-scale=1.0" name="viewport">
-<title> CAMERA PREVIEW </title>
-<link href="/a/bootstrap.min.css" rel="stylesheet">
-<!-- <link href="/a/bootstrap.override.css" rel="stylesheet"> -->
-<script src="/a/bootstrap.bundle.min.js"></script>
-<script src="/a/main.js"></script>
+	<meta charset="UTF-8">
+	<meta content="width=1000,initial-scale=1.0" name="viewport">
+	<title> CAMERA PREVIEW </title>
+	<link href="/a/bootstrap.min.css" rel="stylesheet">
+	<!-- <link href="/a/bootstrap.override.css" rel="stylesheet"> -->
+	<script src="/a/bootstrap.bundle.min.js"></script>
+	<script src="/a/main.js"></script>
 </head>
 
 <body id="top">
 <div class="container">
-<nav class="navbar navbar-expand-lg" style="display: flex; gap 15px; margin: 10px;">
-<a class="btn btn-dark border ms-2" style="width: 300px; height: 50px; font-family: Arial Narrow; fontWeight: 50; color: gray; marginRight: 200px;"><h2><span style="color: gray;"></span>th<span style="color: orange;">ing</span>ino</h2></a>
-<button type="button" class="btn btn-secondary" style="width: 120px; height: 40px; border: 1px solid #909020;" onclick="generateElements()">Preview Pans</button>
-<input type="number" id="elementCount" value="4" min="1" max="16" style="width: 50px; height: 45px; border: 2px solid #505050;" >
-<button type="button" class="btn btn-secondary" style="width: 85px; height: 45px; border: 1px solid #909020;" onclick="generateElements()">Columns</button>
-<input type="number" id="num_col" value="2" min="1" max="8" style="width: 50px; height: 45px; border: 2px solid #505050;" >
-<button type="button" class="btn btn-secondary" id="save-urls-config" style="width: 120px; height: 40px; border: 2px solid orange; background: darkblue;">Save Config</button>
-<label for="cmd_status" style="display: flex; gap: 20px;" >Status: </abel>
-<input type="text" id="md_status" name="md_status" value='status' style="field-sizing: content; min-width: 5ch;">
-</nav>
+	<nav class="navbar navbar-expand-lg" style="display: flex; gap: 15px; margin: 10px;">
+		<button class="btn btn-dark border ms-2" style="width: 300px; height: 50px; font-family: Arial Narrow; font-weight: 50; color: gray; margin-right: 20px;"><h2><span style="color: gray;"></span>th<span style="color: orange;">ing</span>ino</h2></button>
+		<button type="button" class="btn btn-secondary" style="width: 120px; height: 40px; border: 1px solid #909020;" onclick="generateElements()">Preview Pans</button>
+		<input type="number" id="elementCount" value="4" min="1" max="16" style="width: 50px; height: 45px; border: 2px solid #505050;" >
+		<button type="button" class="btn btn-secondary" style="width: 85px; height: 45px; border: 1px solid #909020;" onclick="generateElements()">Columns</button>
+		<input type="number" id="num_col" value="2" min="1" max="8" style="width: 50px; height: 45px; border: 2px solid #505050;" >
+		<button type="button" class="btn btn-secondary" id="save-urls-config" style="width: 120px; height: 40px; border: 2px solid orange; background: darkblue;">Save Config</button>
+		<label for="cmd_status" style="display: flex; gap: 20px;" >Status: </label>
+		<input type="text" id="md_status" name="md_status" value='status' style="field-sizing: content; min-width: 5ch;">
+	</nav>
 </div> 
 </body>
 
@@ -29,171 +30,151 @@
 <div class="container" id="video_view">
 <!-- _preview.cgi -->
 <div class="modal fade" id="mdPreview" tabindex="-1" aria-labelledby="mdlPreview" aria-hidden="true">
-<div class="modal-dialog modal-fullscreen"><div class="modal-content"><div class="modal-header">
-<h1 class="modal-title fs-4" id="mdlPreview">Full screen preview</h1>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body text-center">
-<img id="preview_fullsize" src="" alt="Image: Stream Preview" class="img-fluid">
-</div>
-</div>
-</div>
+	<div class="modal-dialog modal-fullscreen"><div class="modal-content">
+		<div class="modal-header">
+		<h1 class="modal-title fs-4" id="mdlPreview">Full screen preview</h1>
+		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	</div>
+		<div class="modal-body text-center">
+			<img id="preview_fullsize" src="" alt="Image: Stream Preview" class="img-fluid">
+		</div>
+	</div></div>
 </div>
 
 <div class="btn_toolbar" role="toolbar" style="display: flex; gap: 10px;">
-<button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full Preview" style="fontSize: 30px; width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px; textAlign: center; paddingLeft: 0px; "><h3>&#9974;</h3></button>
-<button id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><h4>&#127760;</h4></button>
-<a id="download_image" href="" target="_blank" class="btn btn-dark border mb-2" title="Save Image" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue"; border-radius: 5px;><h4>&#128247;</h4></a>
+	<button id="zoom_btn" type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#mdPreview" title="Full Preview" style="font-size: 30px; width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px; text-align: center; padding-left: 0px; "><h3>&#9974;</h3></button>
+	<a id="site_btn" type="button" class="btn btn-secondary" title="Camera Site" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue; border-radius: 5px;"><h4>&#127760;</h4></a>
+	<a id="download_image" href="" target="_blank" class="btn btn-dark border mb-2" title="Save Image" style="width: 55px; height: 45px; border: 2px solid DimGray; background: darkblue"; border-radius: 5px;><h4>&#128247;</h4></a>
+	<div class="container" id="command_box">
+		<div classe="row">
+			<label for="site_url_in">Target URL</label>
+			<input type="text" id="site_url_in" name="site_url_in" value='192.168.1.162'>
+		</div>
+		<div classe="row">
+			<label for="cmd">JSON Command</label>
+			<input type="text" id="cmd" name="cmd" style="width: 500px;" value='{"sensor":{"select":2}}'>
+		</div>
+		<div classe="row mb-3" style="visibility: visible;">
+			<label for="responseMsg">Response: </label>
+			<input type="text" id="responseMsg" style="width: 500px;" name="responseMsg" value="">
+		</div>
+	</div>
+	<!-- camera selection, dynamic size -->
+	<div classe="row">
+		<div class="btn-group" role="group" id="cam_select">
+			<div id="cam_select_btn">
+				<!-- camera selector goes here -->
+			</div>
+		</div>
+	</div>
+	<div class="box" id="cam_cmd">
+		<div class="row" style="margin: 0px;">
+		<button id="white_on" data-mode=1 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light ON" style="background: darkblue;">&#128161;</button>
+		<button id="ir850_on" data-mode=1 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light ON" style="background: darkblue;">&#128680;</button>
+		<button id="ircut_on" data-mode=1 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut ON" style="background: darkblue;">&#9618;</button>
+		<button id="bw_mode_on" data-mode=1 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Black and White" style="background: darkblue;">&#9788;</button>
+		<button id="motion_on" data-mode=true data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion ON" style="background: darkblue;"><h4>&#128694;</h4></button>
+		</div>
 
-<div class="container" id="command_box">
-<div classe="row">
-	<label for="site_url_in">Target URL</label>
-	<input type="text" id="site_url_in" name="site_url_in" value='192.168.1.162'>
-</div>
-<div classe="row">
-	<label for="cmd">JSON Command</label>
-	<input type="text" id="cmd" name="cmd" style="width: 500px;" value='{"sensor":{"select":2}}'>
-</div>
-<div classe="row mb-3" style="visibility: visible;">
-	<label for="responseMsg">Response: </label>
-	<input type="text" id="responseMsg" style="width: 500px;" name="responseMsg" value="">
-</div>
-</div>
-<!-- camera selection, dynamic size -->
-<div classe="row">
-<div class="btn-group" role="group" id="cam_select">
-<div id="cam_select_btn">
-</div>
-</div>
-</div>
-
-<div class="box" id="cam_cmd">
-<div class="row" style="margin: 0px;">
-<button id="white_on" data-mode=1 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light ON" style="background: darkblue;">&#128161;</button>
-<button id="ir850_on" data-mode=1 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light ON" style="background: darkblue;">&#128680;</button>
-<button id="ircut_on" data-mode=1 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut ON" style="background: darkblue;">&#9618;</button>
-<button id="bw_mode_on" data-mode=1 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Black and White" style="background: darkblue;">&#9788;</button>
-<button id="motion_on" data-mode=true data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion ON" style="background: darkblue;"><h4>&#128694;</h4></button>
-</div>
-
-<div class="row" style="margin-left: 0px; margin-top: 0px;">
-<button id="white_off" data-mode=0 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light off" style="background: black; opacity: 0.5;">&#128161;</button>
-<button id="ir850_off" data-mode=0 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light off" style="background: black; opacity: 0.5;">&#128680;</button>
-<button id="ircut_off" data-mode=0 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut off" style="color: red; background: black; opacity: 0.5;">&#9618;</button>
-<button id="bw_mode_off" data-mode=0 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Color Mode" style="background: black; opacity: 0.5;">&#9978;</button>
-<button id="motion_off" data-mode=false data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion off" style="background: black; opacity: 0.5;"><h4>&#129485;</h4></button>
-</div>
-</div>
-
-<div class="row row-col-2 no-gutters" style="marginLeft: 20px; marginRight:0; marginBottom: 0" >
-<label type="button" class="btn btn-secondary" style="width: 60px; height: 35px; border: 1px solid #909020;" >PTZ</label>
-
-<div class="col mb-3">
-<div class="ml-0 row-cols-2" id="ptz" style="width: 120px; height: 95px; border: 2px solid #805080;">
-<div class="col mb-0"  style="display: flex; gap: 0px;">
-<div class="btn blank_btn">&#8678;</div>
-<a class="btn dir_btn"  id="motor_up" onclick="openAndClose(event,motor_up_url)" target="_self" title="up" style="width: 40px; height: 30px;">&#8679;</a>
-<div class="btn blank_btn">^</div>
-</div>
-<div class="col mb-0"  style="display: flex; gap: 0px;">
-<a class="btn dir_btn"  id="motor_left" onclick="openAndClose(event,motor_left_url)" target="_self" title="left" style="width: 40px; height: 30px;">&#8678;</a>
-<a class="btn dir_btn"  id="motor_home" onclick="openAndClose(event,motor_home_url)" target="_self" title="home" style="width: 40px; height: 30px;">H</a>
-<a class="btn dir_btn"  id="motor_right" onclick="openAndClose(event,motor_right_url)" target="_self" title="right" style="width: 40px; height: 30px;">&#8680;</a>
-</div>
-<div class="col mb-0"  style="display: flex; gap: 0px;">
-<div class="btn blank_btn">&#8678;</div>
-<a class="btn dir_btn"  id="motor_down" onclick="openAndClose(event,motor_down_url)" target="_self" title="down" style="width: 40px; height: 30px;">&#8681;</a>
-<div class="btn blank_btn"></div>
-</div>
-</div>
-
-</div>
-</div>
+		<div class="row" style="margin-left: 0px; margin-top: 0px;">
+		<button id="white_off" data-mode=0 data-cmd='"gpio":{"white":' type="button" class="btn cmd_btn btn-secondary" title="White Light off" style="background: black; opacity: 0.5;">&#128161;</button>
+		<button id="ir850_off" data-mode=0 data-cmd='"gpio":{"ir850":' type="button" class="btn cmd_btn btn-secondary" title="IR Light off" style="background: black; opacity: 0.5;">&#128680;</button>
+		<button id="ircut_off" data-mode=0 data-cmd='"gpio":{"ircut":' type="button" class="btn cmd_btn btn-secondary" title="IR Cut off" style="color: red; background: black; opacity: 0.5;">&#9618;</button>
+		<button id="bw_mode_off" data-mode=0 data-cmd='"image":{"running_mode":' type="button" class="btn cmd_btn btn-secondary" title="Color Mode" style="background: black; opacity: 0.5;">&#9978;</button>
+		<button id="motion_off" data-mode=false data-cmd='"motion":{"enabled":' type="button" class="btn cmd_btn btn-secondary" title="Motion off" style="background: black; opacity: 0.5;"><h4>&#129485;</h4></button>
+		</div>
+	</div>
+	<div class="row row-col-2 no-gutters" style="margin-left: 20px; margin-right:0; margin-bottom: 0" >
+		<label type="button" class="btn btn-secondary" style="width: 60px; height: 35px; border: 1px solid #909020;" >PTZ</label>
+		<div class="col mb-3">
+			<div class="ml-0 row-cols-2" id="ptz" style="width: 120px; height: 95px; border: 2px solid #805080;">
+				<div class="col mb-0"  style="display: flex; gap: 0px;">
+					<div class="btn blank_btn">&#8678;</div>
+					<button class="btn dir_btn"  id="motor_up" onclick="openAndClose(event,motor_up_url)" target="_self" title="up" style="width: 40px; height: 30px;">&#8679;</button>
+					<div class="btn blank_btn">^</div>
+				</div>
+				<div class="col mb-0"  style="display: flex; gap: 0px;">
+					<button class="btn dir_btn"  id="motor_left" onclick="openAndClose(event,motor_left_url)" target="_self" title="left" style="width: 40px; height: 30px;">&#8678;</button>
+					<button class="btn dir_btn"  id="motor_home" onclick="openAndClose(event,motor_home_url)" target="_self" title="home" style="width: 40px; height: 30px;">H</button>
+					<button class="btn dir_btn"  id="motor_right" onclick="openAndClose(event,motor_right_url)" target="_self" title="right" style="width: 40px; height: 30px;">&#8680;</button>
+				</div>
+				<div class="col mb-0"  style="display: flex; gap: 0px;">
+					<div class="btn blank_btn">&#8678;</div>
+					<button class="btn dir_btn"  id="motor_down" onclick="openAndClose(event,motor_down_url)" target="_self" title="down" style="width: 40px; height: 30px;">&#8681;</button>
+					<div class="btn blank_btn"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- camera viewing pans, dynamic size -->
 <p class="small"></p>
 <div class="row row-cols-2 row-cols-lg-2" id="view_area">
-<style>
-<!-- variable input field -->
-.input {
-  field-sizing: content;
-  min-width: 40px; 
-  max-width: 600px; 
-  height: 30px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-</style>
-
-
+	<!-- previews goes here -->
 </div>
-
 </div>
 
 <style>
-.dir_btn:hover {
-	background-color: gray; 
-}
-
-.cmd_btn {
-	width: 55px; 
-	height: 40px; 
-	border: 5px solid DimGray; 
-	background: black; 
-	border-radius: 5px;
-}
-.dir_btn {
-	width: 40px; 
-	height: 40px;
-	margin-left: 0px; 
-	color: white;
-	background-color: darkblue; 
-	border-color: gray;
-	border-radius: 2px;
-}
-
-.blank_btn {
-	width: 40px; 
+	.input {
+	field-sizing: content;
+	min-width: 40px; 
+	max-width: 600px; 
 	height: 30px;
-	margin-left: 0px; 
-	color: black;
-	background-color: smoke; 
-	border-radius: 5px;
-}
+	padding-left: 10px;
+	padding-right: 10px;
+	}
+	.dir_btn:hover {
+		background-color: gray; 
+	}
+	.cmd_btn {
+		width: 55px; 
+		height: 40px; 
+		border: 5px solid DimGray; 
+		background: black; 
+		border-radius: 5px;
+	}
+	.dir_btn {
+		width: 40px; 
+		height: 40px;
+		margin-left: 0px; 
+		color: white;
+		background-color: darkblue; 
+		border-color: gray;
+		border-radius: 2px;
+	}
 
-.no-gutters {
-  margin-right: 0px;
-  margin-left: 0px;
-  row-gap: 10px;
+	.blank_btn {
+		width: 40px; 
+		height: 30px;
+		margin-left: 0px; 
+		color: black;
+		background-color: smoke; 
+		border-radius: 5px;
+	}
 
-  > .col,
-  > [class*="col-"] {
-    padding-right: 0px;
-    padding-left: 0px;
-  }
-}
+	.no-gutters {
+	margin-right: 0px;
+	margin-left: 0px;
+	row-gap: 10px;
 
+	> .col,
+	> [class*="col-"] {
+		padding-right: 0px;
+		padding-left: 0px;
+	}
+	}
+	.box {
+		width: 290px;
+		height: 90px;
+		background-color: #303030; 
+		border: 2px solid #505050;
+		padding: 5px;
+		margin: 0px;
+	}
 </style>
-
-</div>
-</div>
-    <style>
-        .box {
-            width: 290px;
-            height: 90px;
-            background-color: #303030; 
-            border: 2px solid #505050;
-            padding: 5px;
-            margin: 0px;
-        }
-
-    </style>
 
 <div class="container" id="setting_area">
-
-</div>
-</div>
 
 </div>
 
@@ -302,7 +283,6 @@ function mouse_init()
 	});
 }
 
-
 async function handleMessage(msg) {
 	if (msg.action && msg.action.capture == 'initiated') return;
 
@@ -404,7 +384,6 @@ $('#cmd').addEventListener('change', () =>
 });
 
 let s_sel = '"sensor":{"select":';
-
 
 cmd_params.forEach((x) => {
 	const el = $(`#${x}`);
@@ -739,5 +718,6 @@ window.onload =
 </main>
 
 </html>
+
 
 
